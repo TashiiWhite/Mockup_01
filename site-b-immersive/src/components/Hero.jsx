@@ -1,5 +1,5 @@
 import { hero } from '../data/content'
-import { scrollToId } from '../hooks/useScrollReveal'
+import { scrollToId, openBooking } from '../hooks/useScrollReveal'
 import { Icon } from './Icons'
 import VantaBackground from './VantaBackground'
 
@@ -27,7 +27,7 @@ export default function Hero() {
           </p>
 
           <div className="reveal mt-10 flex flex-wrap items-center gap-4">
-            <button onClick={() => scrollToId('contact')} className="btn-primary">
+            <button onClick={openBooking} className="btn-primary">
               {hero.primaryCta}
             </button>
             <button onClick={() => scrollToId('pricing')} className="btn-ghost">

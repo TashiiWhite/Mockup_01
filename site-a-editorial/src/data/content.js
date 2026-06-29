@@ -11,6 +11,14 @@ export const brand = {
   area: 'Serving the metro area, on-site',
 }
 
+// ── Online booking ──────────────────────────────────────────────────────────
+// Paste the client's Square Appointments booking-page URL between the quotes,
+// e.g. 'https://book.squareup.com/appointments/xxxx/location/yyyy'.
+// While this is empty, every "Book an appointment" button smooth-scrolls to the
+// on-page contact form (mockup behavior). Once a URL is set, those same buttons
+// open the live Square booking page in a new tab — no other code change needed.
+export const bookingUrl = ''
+
 export const nav = [
   { label: 'Services', href: '#features' },
   { label: 'Pricing', href: '#pricing' },

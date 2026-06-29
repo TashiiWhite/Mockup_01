@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { brand, nav } from '../data/content'
-import { scrollToId } from '../hooks/useScrollReveal'
+import { scrollToId, openBooking } from '../hooks/useScrollReveal'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -16,6 +16,11 @@ export default function Navbar() {
   const go = (href) => {
     setOpen(false)
     scrollToId(href.replace('#', ''))
+  }
+
+  const book = () => {
+    setOpen(false)
+    openBooking()
   }
 
   return (
@@ -47,7 +52,7 @@ export default function Navbar() {
               {item.label}
             </button>
           ))}
-          <button onClick={() => go('#contact')} className="btn-primary !px-6 !py-3">
+          <button onClick={book} className="btn-primary !px-6 !py-3">
             Book an appointment
           </button>
         </div>
@@ -76,7 +81,7 @@ export default function Navbar() {
                 {item.label}
               </button>
             ))}
-            <button onClick={() => go('#contact')} className="btn-primary mt-3 w-full">
+            <button onClick={book} className="btn-primary mt-3 w-full">
               Book an appointment
             </button>
           </div>

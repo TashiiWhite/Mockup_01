@@ -1,5 +1,5 @@
 import { pricing } from '../data/content'
-import { scrollToId } from '../hooks/useScrollReveal'
+import { openBooking } from '../hooks/useScrollReveal'
 import { Icon } from './Icons'
 
 export default function Pricing() {
@@ -54,7 +54,7 @@ export default function Pricing() {
               </ul>
 
               <button
-                onClick={() => scrollToId('contact')}
+                onClick={openBooking}
                 className={`mt-8 w-full rounded-full px-6 py-4 text-sm font-medium tracking-wide transition-all duration-300 ${
                   tier.featured
                     ? 'bg-gold text-ivory hover:bg-champagne hover:text-ink'

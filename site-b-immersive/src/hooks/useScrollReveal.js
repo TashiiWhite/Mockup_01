@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { bookingUrl } from '../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -49,4 +50,18 @@ export function scrollToId(id) {
   if (!el) return
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
+}
+
+/**
+ * Booking action shared by every "Book an appointment" CTA.
+ * If a Square Appointments URL is configured (see bookingUrl in data/content.js)
+ * it opens the live booking page in a new tab; otherwise it falls back to
+ * smooth-scrolling to the on-page contact form.
+ */
+export function openBooking() {
+  if (bookingUrl) {
+    window.open(bookingUrl, '_blank', 'noopener,noreferrer')
+  } else {
+    scrollToId('contact')
+  }
 }

@@ -63,6 +63,44 @@ site-a-editorial/    # npm install -> npm run dev | build | preview
 site-b-immersive/    # npm install -> npm run dev | build | preview
 ```
 
+## Deploying & client handoff (Netlify)
+
+Each site is a standard static build, so any static host works. The simplest path —
+**Netlify connected to this GitHub repo**, which auto-rebuilds on every `git push`:
+
+1. In Netlify: **Add new site → Import from GitHub** and pick this repo.
+2. Because both sites live in one repo, create **two Netlify sites**, one per folder:
+
+   | Setting | Site A | Site B |
+   | --- | --- | --- |
+   | Base directory | `site-a-editorial` | `site-b-immersive` |
+   | Build command | `npm run build` | `npm run build` |
+   | Publish directory | `dist` | `dist` |
+
+   A [`netlify.toml`](site-a-editorial/netlify.toml) in each folder already sets the build
+   command and publish directory — you only need to set the **base directory** in the UI.
+3. Each site gets a free `*.netlify.app` URL to share with the client.
+4. **Custom domain:** add it under Netlify → *Domain settings*, point the domain's DNS at
+   Netlify, and Netlify provisions free HTTPS automatically.
+
+To hand the project to the client: transfer this GitHub repo to their account (or add them as a
+collaborator), then they connect their own Netlify using the settings above. After that, every
+push auto-deploys — nothing is uploaded by hand.
+
+## Connecting online booking (Square Appointments)
+
+The "Book an appointment" buttons are wired to a single setting, `bookingUrl`, in each site's
+`src/data/content.js`:
+
+- **While `bookingUrl` is empty** (current state), the buttons smooth-scroll to the on-page
+  contact form — correct mockup behavior.
+- **Set `bookingUrl`** to the client's Square Appointments booking-page URL and every
+  "Book an appointment" button (nav, hero, and pricing tiers) opens the live Square booking flow
+  in a new tab. No other code changes needed.
+
+Payments and scheduling stay inside Square (which the client already uses), and Square syncs
+confirmed appointments to the owner's Google Calendar.
+
 ## Notes
 
 - These are **mockups/demos** to help choose a design direction — not the production site.

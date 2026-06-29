@@ -1,0 +1,13 @@
+# Netlify build settings for Site B (Immersive).
+# In the Netlify UI, set this site's "Base directory" to: site-b-immersive
+# (Netlify then reads this file and the paths below are relative to that base.)
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Single-page app: always serve index.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

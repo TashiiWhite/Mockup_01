@@ -1,5 +1,5 @@
 import { hero, brand } from '../data/content'
-import { scrollToId } from '../hooks/useScrollReveal'
+import { scrollToId, openBooking } from '../hooks/useScrollReveal'
 import { Icon } from './Icons'
 
 export default function Hero() {
@@ -15,7 +15,7 @@ export default function Hero() {
           <p className="mt-6 max-w-md text-lg leading-relaxed text-stone">{hero.sub}</p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <button onClick={() => scrollToId('contact')} className="btn-primary">
+            <button onClick={openBooking} className="btn-primary">
               {hero.primaryCta}
             </button>
             <button onClick={() => scrollToId('pricing')} className="btn-ghost">
