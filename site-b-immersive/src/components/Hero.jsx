@@ -1,9 +1,26 @@
 import { hero } from '../data/content'
 import { scrollToId, openBooking } from '../hooks/useScrollReveal'
+import { useMagnetic, useCountUp } from '../hooks/useMotion'
 import { Icon } from './Icons'
 import VantaBackground from './VantaBackground'
 
+function Stat({ stat }) {
+  const format = (n) =>
+    (stat.decimals ? n.toFixed(stat.decimals) : Math.round(n).toLocaleString()) + (stat.suffix || '')
+  const { ref, display } = useCountUp(stat.value, format)
+  return (
+    <div>
+      <dt ref={ref} className="font-serif text-3xl text-gold md:text-4xl">
+        {display}
+      </dt>
+      <dd className="mt-1 text-xs leading-snug text-mist">{stat.label}</dd>
+    </div>
+  )
+}
+
 export default function Hero() {
+  const magneticRef = useMagnetic()
+
   return (
     <section id="top" className="relative flex min-h-screen items-center overflow-hidden">
       {/* Static gradient fallback — always present */}
@@ -18,30 +35,30 @@ export default function Hero() {
 
       <div className="relative mx-auto w-full max-w-content px-6 py-32 md:px-10">
         <div className="max-w-3xl">
-          <span className="reveal eyebrow inline-block">{hero.eyebrow}</span>
-          <h1 className="reveal mt-6 font-serif text-5xl leading-[1.04] text-smoke sm:text-6xl md:text-7xl lg:text-8xl">
-            {hero.headline}
+          <span className="reveal eyebrow-line">{hero.eyebrow}</span>
+          <h1 className="reveal mt-6 statement text-balance">
+            {hero.headlineLead}{' '}
+            <span className="italic text-gold">{hero.headlineEmphasis}</span>
           </h1>
           <p className="reveal mt-7 max-w-xl text-lg leading-relaxed text-mist md:text-xl">
             {hero.sub}
           </p>
 
           <div className="reveal mt-10 flex flex-wrap items-center gap-4">
-            <button onClick={openBooking} className="btn-primary">
-              {hero.primaryCta}
-            </button>
+            <span ref={magneticRef} className="inline-block">
+              <button onClick={openBooking} className="btn-primary">
+                {hero.primaryCta}
+                <Icon name="arrow" className="h-4 w-4" />
+              </button>
+            </span>
             <button onClick={() => scrollToId('pricing')} className="btn-ghost">
               {hero.secondaryCta}
-              <Icon name="arrow" className="ml-2 h-4 w-4" />
             </button>
           </div>
 
           <dl className="reveal mt-16 grid max-w-xl grid-cols-3 gap-6 border-t border-smoke/15 pt-8">
             {hero.stats.map((s) => (
-              <div key={s.label}>
-                <dt className="font-serif text-3xl text-gold md:text-4xl">{s.value}</dt>
-                <dd className="mt-1 text-xs leading-snug text-mist">{s.label}</dd>
-              </div>
+              <Stat key={s.label} stat={s} />
             ))}
           </dl>
         </div>

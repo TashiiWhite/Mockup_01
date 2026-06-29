@@ -1,39 +1,73 @@
 import { testimonials } from '../data/content'
 import { Icon } from './Icons'
 
-export default function Testimonials() {
+function Stars({ className = '' }) {
   return (
-    <section className="section-pad bg-cream/40">
+    <div className={`flex gap-0.5 text-gold ${className}`} aria-label="5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 18.6 6 20.7l1.2-6.6L2.4 9.5l6.6-.9L12 2.5z" />
+        </svg>
+      ))}
+    </div>
+  )
+}
+
+export default function Testimonials() {
+  const [featured, ...rest] = testimonials.items
+
+  return (
+    <section className="section-pad">
       <div className="mx-auto max-w-content px-6 md:px-10">
-        <div className="reveal mx-auto max-w-2xl text-center">
-          <span className="eyebrow">{testimonials.eyebrow}</span>
-          <h2 className="mt-4 font-serif text-4xl text-ink md:text-5xl">{testimonials.title}</h2>
+        <div className="reveal max-w-2xl">
+          <span className="eyebrow-line">{testimonials.eyebrow}</span>
+          <h2 className="mt-5 statement text-display-sm">{testimonials.title}</h2>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {testimonials.items.map((t) => (
-            <figure
-              key={t.name}
-              className="reveal flex flex-col rounded-3xl bg-ivory p-8 shadow-sm ring-1 ring-ink/5 transition-transform duration-300 hover:-translate-y-1"
-            >
-              <Icon name="quote" className="h-8 w-8 text-gold/70" />
-              <blockquote className="mt-5 flex-1 font-serif text-xl leading-relaxed text-ink/90">
-                “{t.quote}”
-              </blockquote>
-              <figcaption className="mt-7 flex items-center gap-4 border-t border-ink/10 pt-6">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  loading="lazy"
-                  className="h-12 w-12 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-medium text-ink">{t.name}</p>
-                  <p className="text-sm text-stone">{t.role}</p>
-                </div>
-              </figcaption>
-            </figure>
-          ))}
+        <div className="mt-14 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
+          {/* Featured pull-quote */}
+          <figure className="reveal relative flex flex-col justify-between overflow-hidden rounded-[2rem] bg-ink p-10 text-ivory md:p-14">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gold/15 blur-3xl" />
+            <Icon name="quote" className="relative h-10 w-10 text-gold" />
+            <blockquote className="relative mt-6 font-serif text-3xl leading-[1.25] text-ivory md:text-4xl">
+              “{featured.quote}”
+            </blockquote>
+            <figcaption className="relative mt-10 flex items-center gap-4 border-t border-ivory/15 pt-7">
+              <img
+                src={featured.avatar}
+                alt={featured.name}
+                loading="lazy"
+                className="h-14 w-14 rounded-full object-cover ring-2 ring-gold/40"
+              />
+              <div className="flex-1">
+                <p className="font-medium text-ivory">{featured.name}</p>
+                <p className="text-sm text-champagne/80">{featured.role}</p>
+              </div>
+              <Stars />
+            </figcaption>
+          </figure>
+
+          {/* Supporting cards */}
+          <div className="grid gap-6">
+            {rest.map((t) => (
+              <figure
+                key={t.name}
+                className="reveal card-surface flex flex-col p-8"
+              >
+                <Stars className="mb-4" />
+                <blockquote className="flex-1 font-serif text-xl leading-relaxed text-ink/90">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-6 flex items-center gap-3 border-t border-ink/10 pt-5">
+                  <img src={t.avatar} alt={t.name} loading="lazy" className="h-11 w-11 rounded-full object-cover" />
+                  <div>
+                    <p className="text-sm font-medium text-ink">{t.name}</p>
+                    <p className="text-xs text-stone">{t.role}</p>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </div>
     </section>

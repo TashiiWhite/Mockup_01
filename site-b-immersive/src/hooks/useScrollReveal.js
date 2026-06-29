@@ -6,8 +6,10 @@ import { bookingUrl } from '../data/content'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Animates every element with the `.reveal` class into view on scroll.
- * Respects prefers-reduced-motion (CSS already shows them; we just skip GSAP).
+ * Scroll-reveal system.
+ *  - `.reveal`          : single element fades/slides up when it enters view.
+ *  - `.reveal-stagger`  : container whose direct children animate in sequence.
+ * Respects prefers-reduced-motion (CSS shows everything; we skip GSAP).
  */
 export function useScrollReveal() {
   useEffect(() => {
@@ -21,17 +23,24 @@ export function useScrollReveal() {
           y: 0,
           duration: 0.9,
           ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 88%',
-            once: true,
-          },
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        })
+      })
+
+      gsap.utils.toArray('.reveal-stagger').forEach((group) => {
+        const kids = group.children
+        gsap.set(kids, { opacity: 0, y: 30 })
+        gsap.to(kids, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: 0.12,
+          scrollTrigger: { trigger: group, start: 'top 85%', once: true },
         })
       })
     })
 
-    // Recompute trigger positions after fonts/images settle (remote images can
-    // grow the page after triggers are first measured, leaving lower ones stale).
     const refresh = () => ScrollTrigger.refresh()
     const timers = [setTimeout(refresh, 200), setTimeout(refresh, 1200)]
     window.addEventListener('load', refresh)
@@ -42,6 +51,26 @@ export function useScrollReveal() {
       ctx.revert()
     }
   }, [])
+}
+
+/** Drives the fixed top progress bar (.scroll-progress) as the page scrolls. */
+export function useScrollProgress(ref) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+
+    const onScroll = () => {
+      const h = document.documentElement
+      const max = h.scrollHeight - h.clientHeight
+      const p = max > 0 ? h.scrollTop / max : 0
+      el.style.transform = `scaleX(${p})`
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [ref])
 }
 
 /** Smooth-scroll helper used by the CTAs. */

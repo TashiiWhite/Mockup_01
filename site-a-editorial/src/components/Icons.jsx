@@ -48,6 +48,22 @@ export function Icon({ name, className = '' }) {
     check: <path d="M5 12l4.5 4.5L19 7" />,
     plus: <path d="M12 5v14M5 12h14" />,
     quote: <path d="M9 7H5v6h4v-2H7a2 2 0 012-2V7zm10 0h-4v6h4v-2h-2a2 2 0 012-2V7z" />,
+    phone: <path d="M5 4h3l2 5-2.5 1.5a11 11 0 005 5L19 18l-1 3a16 16 0 01-13-13z" />,
+    instagram: (
+      <>
+        <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+        <circle cx="12" cy="12" r="3.6" />
+        <circle cx="17" cy="7" r="0.6" fill="currentColor" />
+      </>
+    ),
+    facebook: <path d="M14 8h2V5h-2.5A3.5 3.5 0 0010 8.5V11H8v3h2v6h3v-6h2.2l.5-3H13V9a1 1 0 011-1z" />,
+    tiktok: <path d="M14 4c.3 2.3 1.8 3.9 4 4.2v2.6c-1.4 0-2.8-.4-4-1.2v5.4A4.9 4.9 0 119.2 10v2.7a2.3 2.3 0 102 2.3V4h2.8z" />,
+    youtube: (
+      <>
+        <rect x="3" y="6" width="18" height="12" rx="3.5" />
+        <path d="M10.5 9.3l4.2 2.7-4.2 2.7V9.3z" fill="currentColor" />
+      </>
+    ),
   }
   return (
     <svg {...base} className={className} aria-hidden="true">

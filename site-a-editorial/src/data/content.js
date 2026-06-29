@@ -7,6 +7,7 @@ export const brand = {
   full: 'Lustre Detailing',
   tagline: 'Mobile detailing & paint correction',
   phone: '(555) 248-7390',
+  phoneHref: 'tel:+15552487390',
   email: 'hello@lustredetailing.ca',
   area: 'Serving the metro area, on-site',
 }
@@ -28,15 +29,16 @@ export const nav = [
 
 export const hero = {
   eyebrow: 'On-site detailing & paint correction',
-  // 8 words max
-  headline: 'Showroom shine, delivered to your door.',
+  // Split for a word-by-word reveal; last word is the gold emphasis.
+  headlineLead: 'Showroom shine, delivered to your',
+  headlineEmphasis: 'door.',
   sub: 'We bring multi-stage paint correction and concours-level detailing to your driveway — so your day never stops for it.',
   primaryCta: 'Book an appointment',
   secondaryCta: 'See packages',
   stats: [
-    { value: '1,200+', label: 'Vehicles restored' },
-    { value: '4.9★', label: 'Average rating' },
-    { value: '100%', label: 'Mobile, we come to you' },
+    { value: 1200, suffix: '+', label: 'Vehicles restored' },
+    { value: 4.9, decimals: 1, suffix: '★', label: 'Average rating' },
+    { value: 100, suffix: '%', label: 'Mobile — we come to you' },
   ],
 }
 
@@ -81,6 +83,19 @@ export const features = {
       desc: "If a detail isn't right, we make it right before we leave. No exceptions.",
     },
   ],
+}
+
+export const beforeAfter = {
+  eyebrow: 'See the difference',
+  title: 'The proof is in the paint.',
+  sub: 'Drag the handle. The left is dull, swirled, oxidized clear coat — the right is the same panel after a Lustre multi-stage correction.',
+  // A single high-res paint shot; the "before" layer is rendered with a
+  // desaturating filter so the contrast reads clearly without two assets.
+  image:
+    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1400&q=80',
+  alt: 'Close detail of a sports car body panel with a deep, glossy finish',
+  beforeLabel: 'Before',
+  afterLabel: 'After',
 }
 
 export const testimonials = {

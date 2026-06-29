@@ -11,6 +11,10 @@
     @apply bg-obsidian text-smoke font-sans antialiased;
   }
 
+  h1, h2, h3, .font-serif {
+    font-optical-sizing: auto;
+  }
+
   ::selection {
     @apply bg-gold/30 text-smoke;
   }
@@ -18,14 +22,31 @@
 
 @layer components {
   .eyebrow {
-    @apply text-xs uppercase tracking-widest text-gold font-medium;
+    @apply text-xs uppercase tracking-widest text-gold font-semibold;
+  }
+
+  .eyebrow-line {
+    @apply inline-flex items-center gap-3 text-xs uppercase tracking-widest text-gold font-semibold;
+  }
+  .eyebrow-line::before {
+    content: '';
+    @apply h-px w-8 bg-gold/50;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-gold px-8 py-4 text-sm font-medium
-      tracking-wide text-obsidian transition-all duration-300 hover:bg-champagne hover:-translate-y-0.5
-      hover:shadow-lg hover:shadow-gold/30 focus:outline-none focus-visible:ring-2
-      focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gold px-8 py-4
+      text-sm font-medium tracking-wide text-obsidian transition-all duration-300
+      hover:-translate-y-0.5 hover:shadow-glow-gold
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2
+      focus-visible:ring-offset-obsidian;
+  }
+  .btn-primary::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r
+      from-transparent via-white/40 to-transparent transition-transform duration-700;
+  }
+  .btn-primary:hover::after {
+    @apply translate-x-full;
   }
 
   .btn-ghost {
@@ -41,10 +62,57 @@
   .gold-line {
     @apply bg-gradient-to-r from-transparent via-gold/50 to-transparent;
   }
+
+  /* Elevated dark surface: subtle top highlight + glow instead of a flat 1px border */
+  .card-surface {
+    @apply rounded-3xl bg-gradient-to-b from-carbon to-graphite ring-1 ring-white/[0.06] transition-all duration-500;
+  }
+  .card-surface:hover {
+    @apply -translate-y-1 shadow-glow ring-gold/25;
+  }
+
+  .statement {
+    @apply font-serif text-display leading-[1.0] tracking-tight text-smoke;
+  }
 }
 
-/* Scroll-reveal initial state — only hidden when JS is active (html.js).
-   Without JS, or under reduced motion, content is always visible. */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+/* Ambient bronze glow carried through the page (atmosphere past the hero) */
+.atmosphere {
+  position: relative;
+  isolation: isolate;
+}
+.atmosphere::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(60% 50% at 50% 0%, rgba(201, 163, 92, 0.07), transparent 70%);
+  pointer-events: none;
+}
+
+/* Top scroll-progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(to right, #c9a35c, #e4d2a8);
+  z-index: 60;
+}
+
 html.js .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -55,8 +123,17 @@ html.js .reveal {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .reveal,
+  .reveal-stagger > * {
     opacity: 1 !important;
     transform: none !important;
+  }
+  .animate-marquee,
+  .animate-float,
+  .animate-shimmer {
+    animation: none !important;
+  }
+  .scroll-progress {
+    display: none;
   }
 }

@@ -11,6 +11,11 @@
     @apply bg-ivory text-ink font-sans antialiased;
   }
 
+  /* Optical display type: tighter tracking, real serif character */
+  h1, h2, h3, .font-serif {
+    font-optical-sizing: auto;
+  }
+
   ::selection {
     @apply bg-gold/30 text-ink;
   }
@@ -18,25 +23,81 @@
 
 @layer components {
   .eyebrow {
-    @apply text-xs uppercase tracking-widest text-gold font-medium;
+    /* Deep bronze passes WCAG AA on light surfaces (fixes the gold-on-cream failure) */
+    @apply text-xs uppercase tracking-widest text-bronze font-semibold;
+  }
+
+  .eyebrow-line {
+    @apply inline-flex items-center gap-3 text-xs uppercase tracking-widest text-bronze font-semibold;
+  }
+  .eyebrow-line::before {
+    content: '';
+    @apply h-px w-8 bg-gold/60;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-ink px-8 py-4 text-sm font-medium
-      tracking-wide text-ivory transition-all duration-300 hover:bg-gold hover:-translate-y-0.5
-      hover:shadow-lg hover:shadow-gold/20 focus:outline-none focus-visible:ring-2
-      focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ivory;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-ink px-8 py-4
+      text-sm font-medium tracking-wide text-ivory transition-all duration-300
+      hover:-translate-y-0.5 hover:shadow-luxe-sm
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2
+      focus-visible:ring-offset-ivory;
+  }
+  /* Gold sheen that sweeps across the primary button on hover */
+  .btn-primary::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r
+      from-transparent via-gold/40 to-transparent transition-transform duration-700;
+  }
+  .btn-primary:hover::after {
+    @apply translate-x-full;
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-ink/20 px-8 py-4
       text-sm font-medium tracking-wide text-ink transition-all duration-300 hover:border-gold
-      hover:text-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-gold;
+      hover:text-bronze focus:outline-none focus-visible:ring-2 focus-visible:ring-gold;
   }
 
   .section-pad {
     @apply py-24 md:py-32;
   }
+
+  /* Soft card surface with hover lift used across bento + pricing */
+  .card-surface {
+    @apply rounded-3xl bg-porcelain ring-1 ring-ink/[0.07] transition-all duration-500;
+  }
+  .card-surface:hover {
+    @apply -translate-y-1 shadow-luxe ring-ink/10;
+  }
+
+  /* Oversized statement type for editorial moments */
+  .statement {
+    @apply font-serif text-display leading-[1.02] tracking-tight text-ink;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Fade the marquee edges */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+/* Top scroll-progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(to right, #B08D4F, #D8C7A3);
+  z-index: 60;
 }
 
 /* Scroll-reveal initial state — only hidden when JS is active (html.js).
@@ -51,8 +112,17 @@ html.js .reveal {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .reveal,
+  .reveal-stagger > * {
     opacity: 1 !important;
     transform: none !important;
+  }
+  .animate-marquee,
+  .animate-float,
+  .animate-shimmer {
+    animation: none !important;
+  }
+  .scroll-progress {
+    display: none;
   }
 }

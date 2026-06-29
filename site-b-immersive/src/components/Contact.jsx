@@ -35,26 +35,37 @@ export default function Contact() {
   })
 
   const inputClass = (name) =>
-    `w-full rounded-xl border bg-obsidian px-4 py-3 text-smoke outline-none transition-colors placeholder:text-mist/40 focus:border-gold ${
-      errors[name] ? 'border-red-500/70' : 'border-smoke/15'
+    `w-full rounded-xl border bg-graphite px-4 py-3 text-smoke outline-none transition-all placeholder:text-mist/50 focus:border-gold focus:ring-2 focus:ring-gold/25 ${
+      errors[name] ? 'border-red-500/70' : 'border-white/15'
     }`
 
   return (
-    <section id="contact" className="section-pad bg-graphite/40">
+    <section id="contact" className="atmosphere section-pad">
       <div className="mx-auto grid max-w-content grid-cols-1 gap-14 px-6 md:px-10 lg:grid-cols-2">
         <div className="reveal">
-          <span className="eyebrow">{contact.eyebrow}</span>
-          <h2 className="mt-4 font-serif text-4xl text-smoke md:text-5xl">{contact.title}</h2>
+          <span className="eyebrow-line">{contact.eyebrow}</span>
+          <h2 className="mt-5 statement text-display-sm">{contact.title}</h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-mist">{contact.sub}</p>
 
           <dl className="mt-10 space-y-4">
             <div>
               <dt className="text-xs uppercase tracking-widest text-mist">Email</dt>
-              <dd className="font-serif text-xl text-smoke">{brand.email}</dd>
+              <dd className="font-serif text-xl text-smoke">
+                <a href={`mailto:${brand.email}`} className="transition-colors hover:text-gold">
+                  {brand.email}
+                </a>
+              </dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-widest text-mist">Phone</dt>
-              <dd className="font-serif text-xl text-smoke">{brand.phone}</dd>
+              <dd className="font-serif text-xl text-smoke">
+                <a href={brand.phoneHref} className="inline-flex items-center gap-2 transition-colors hover:text-gold">
+                  {brand.phone}
+                  <span className="rounded-full bg-carbon px-2.5 py-0.5 text-[10px] font-sans font-semibold uppercase tracking-widest text-gold">
+                    Tap to call
+                  </span>
+                </a>
+              </dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-widest text-mist">Service area</dt>
@@ -67,7 +78,7 @@ export default function Contact() {
           {sent ? (
             <div
               role="status"
-              className="flex h-full min-h-[18rem] flex-col items-center justify-center rounded-3xl border border-gold/30 bg-carbon p-10 text-center"
+              className="flex h-full min-h-[18rem] flex-col items-center justify-center rounded-3xl border border-gold/30 bg-gradient-to-b from-carbon to-graphite p-10 text-center"
             >
               <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gold text-obsidian">
                 <Icon name="check" className="h-7 w-7" />
@@ -78,7 +89,7 @@ export default function Contact() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-smoke/10 bg-carbon p-8 md:p-10"
+              className="rounded-3xl bg-gradient-to-b from-carbon to-graphite p-8 ring-1 ring-white/10 md:p-10"
             >
               <div className="space-y-5">
                 <div>

@@ -4,3 +4,10 @@ node_modules/
 dist/
 build/
 .env
+
+# Local QA / tooling artifacts (screenshots, Playwright snapshots)
+.playwright-mcp/
+site-a-before.png
+site-a-after.png
+site-b-before.png
+site-b-after.png

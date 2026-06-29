@@ -46,18 +46,29 @@ export default function Contact() {
     <section id="contact" className="section-pad bg-cream/40">
       <div className="mx-auto grid max-w-content grid-cols-1 gap-14 px-6 md:px-10 lg:grid-cols-2">
         <div className="reveal">
-          <span className="eyebrow">{contact.eyebrow}</span>
-          <h2 className="mt-4 font-serif text-4xl text-ink md:text-5xl">{contact.title}</h2>
+          <span className="eyebrow-line">{contact.eyebrow}</span>
+          <h2 className="mt-5 statement text-display-sm">{contact.title}</h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-stone">{contact.sub}</p>
 
           <dl className="mt-10 space-y-4 text-ink">
             <div>
               <dt className="text-xs uppercase tracking-widest text-stone">Email</dt>
-              <dd className="font-serif text-xl">{brand.email}</dd>
+              <dd className="font-serif text-xl">
+                <a href={`mailto:${brand.email}`} className="transition-colors hover:text-bronze">
+                  {brand.email}
+                </a>
+              </dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-widest text-stone">Phone</dt>
-              <dd className="font-serif text-xl">{brand.phone}</dd>
+              <dd className="font-serif text-xl">
+                <a href={brand.phoneHref} className="inline-flex items-center gap-2 transition-colors hover:text-bronze">
+                  {brand.phone}
+                  <span className="rounded-full bg-cream px-2.5 py-0.5 text-[10px] font-sans font-semibold uppercase tracking-widest text-bronze">
+                    Tap to call
+                  </span>
+                </a>
+              </dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-widest text-stone">Service area</dt>
