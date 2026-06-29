@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-obsidian text-smoke font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-smoke;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-xs uppercase tracking-widest text-gold font-medium;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-gold px-8 py-4 text-sm font-medium
+      tracking-wide text-obsidian transition-all duration-300 hover:bg-champagne hover:-translate-y-0.5
+      hover:shadow-lg hover:shadow-gold/30 focus:outline-none focus-visible:ring-2
+      focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-smoke/25 px-8 py-4
+      text-sm font-medium tracking-wide text-smoke transition-all duration-300 hover:border-gold
+      hover:text-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-gold;
+  }
+
+  .section-pad {
+    @apply py-24 md:py-32;
+  }
+
+  .gold-line {
+    @apply bg-gradient-to-r from-transparent via-gold/50 to-transparent;
+  }
+}
+
+/* Scroll-reveal initial state — only hidden when JS is active (html.js).
+   Without JS, or under reduced motion, content is always visible. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
