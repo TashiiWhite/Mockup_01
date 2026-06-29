@@ -85,6 +85,48 @@
     -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
     mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
   }
+  /* Oversized editorial headline that can bleed past its container */
+  .headline-bleed {
+    @apply font-serif leading-[0.95] tracking-tight;
+    font-size: clamp(2.75rem, 8vw, 7rem);
+  }
+}
+
+/* Fine film grain for material richness (premium tactile feel). Fixed,
+   subtle, non-interactive. Removed under reduced motion is unnecessary —
+   it is static, but we keep it light so it never distracts. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Cursor "polish" shine — a radial highlight that tracks the pointer across
+   a surface, evoking light raking over freshly corrected paint. */
+.shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    180px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 250, 240, 0.5),
+    rgba(216, 199, 163, 0.12) 40%,
+    transparent 65%
+  );
+  mix-blend-mode: soft-light;
+}
+.shine-host:hover .shine {
+  opacity: 1;
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-130%) skewX(-18deg); }
+  100% { transform: translateX(230%) skewX(-18deg); }
 }
 
 /* Top scroll-progress bar */
@@ -106,6 +148,12 @@ html.js .reveal {
   opacity: 0;
   transform: translateY(28px);
   will-change: opacity, transform;
+}
+
+/* Stagger children start hidden too (GSAP animates them in), preventing a
+   flash of content before the effect runs. */
+html.js .reveal-stagger > * {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

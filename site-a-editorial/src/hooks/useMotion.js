@@ -44,6 +44,10 @@ export function useMagnetic(strength = 0.35) {
 export function useCountUp(value, format = (n) => Math.round(n).toLocaleString()) {
   const ref = useRef(null)
   const [display, setDisplay] = useState(reduced() ? format(value) : format(0))
+  // Keep the latest formatter without making it an effect dependency — an inline
+  // formatter changes identity each render and would otherwise restart the tween.
+  const formatRef = useRef(format)
+  formatRef.current = format
 
   useEffect(() => {
     const el = ref.current
@@ -55,7 +59,7 @@ export function useCountUp(value, format = (n) => Math.round(n).toLocaleString()
       duration: 1.6,
       ease: 'power2.out',
       paused: true,
-      onUpdate: () => setDisplay(format(obj.n)),
+      onUpdate: () => setDisplay(formatRef.current(obj.n)),
     })
 
     // IntersectionObserver reliably fires for elements already on-screen at
@@ -75,9 +79,30 @@ export function useCountUp(value, format = (n) => Math.round(n).toLocaleString()
       tween.kill()
       io.disconnect()
     }
-  }, [value, format])
+  }, [value])
 
   return { ref, display }
+}
+
+/**
+ * Cursor "polish" spotlight: writes --mx/--my CSS variables (as %) on the
+ * element so a child `.shine` radial highlight can track the pointer.
+ * Pointer-only; on touch it simply never fires and the shine stays hidden.
+ */
+export function useSpotlight() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !window.matchMedia('(pointer: fine)').matches) return
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect()
+      el.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`)
+      el.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`)
+    }
+    el.addEventListener('mousemove', onMove)
+    return () => el.removeEventListener('mousemove', onMove)
+  }, [])
+  return ref
 }
 
 /** Subtle parallax: element shifts on the Y axis as it scrolls through view. */

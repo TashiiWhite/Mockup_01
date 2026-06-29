@@ -156,6 +156,7 @@ export const pricing = {
         'Single-stage paint correction',
         '6-month sealant protection',
         'Interior deep clean & conditioning',
+        'Iron & tar decontamination',
         'Engine bay tidy',
       ],
       cta: 'Book Signature',

@@ -5,9 +5,15 @@ dist/
 build/
 .env
 
+# Local Claude Code tooling (skills, agents, locks) — not part of the site
+.claude/
+.agents/
+skills-lock.json
+
 # Local QA / tooling artifacts (screenshots, Playwright snapshots)
 .playwright-mcp/
 site-a-before.png
 site-a-after.png
 site-b-before.png
 site-b-after.png
+a-pricing.png

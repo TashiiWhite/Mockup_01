@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { beforeAfter } from '../data/content'
-import { useParallax } from '../hooks/useMotion'
+import { SectionLabel } from './SectionLabel'
 
 /**
  * Interactive before/after reveal slider. One source image is used for both
@@ -11,7 +11,6 @@ export default function BeforeAfter() {
   const [pos, setPos] = useState(50)
   const [dragging, setDragging] = useState(false)
   const containerRef = useRef(null)
-  const parallaxRef = useParallax(40)
 
   const move = useCallback((clientX) => {
     const el = containerRef.current
@@ -44,12 +43,15 @@ export default function BeforeAfter() {
   }
 
   return (
-    <section className="atmosphere section-pad">
-      <div className="mx-auto max-w-content px-6 md:px-10">
+    <section className="atmosphere relative section-pad overflow-hidden">
+      {/* Luminous bronze glow — the brightest, most "lit" moment on the page,
+          a deliberate rhythm break in the long dark scroll */}
+      <div className="pointer-events-none absolute right-0 top-1/2 h-[42rem] w-[42rem] -translate-y-1/2 translate-x-1/3 rounded-full bg-[radial-gradient(circle,rgba(201,163,92,0.18),transparent_70%)] blur-2xl" />
+      <div className="relative mx-auto max-w-content px-6 md:px-10">
         <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.4fr]">
           {/* Copy — left, asymmetric */}
           <div className="reveal">
-            <span className="eyebrow-line">{beforeAfter.eyebrow}</span>
+            <SectionLabel index="02">{beforeAfter.eyebrow}</SectionLabel>
             <h2 className="mt-5 statement text-display-sm">{beforeAfter.title}</h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-mist">{beforeAfter.sub}</p>
             <p className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-gold">
@@ -59,7 +61,7 @@ export default function BeforeAfter() {
           </div>
 
           {/* Slider — right, larger */}
-          <div ref={parallaxRef} className="reveal">
+          <div className="reveal">
             <div
               ref={containerRef}
               className="relative aspect-[4/3] w-full select-none overflow-hidden rounded-[2rem] shadow-glow ring-1 ring-white/10 sm:aspect-[16/10]"

@@ -63,12 +63,15 @@
     @apply bg-gradient-to-r from-transparent via-gold/50 to-transparent;
   }
 
-  /* Elevated dark surface: subtle top highlight + glow instead of a flat 1px border */
+  /* Elevated dark surface: a genuinely lighter tone (slate→carbon) so cards
+     separate from the near-black section background, plus a brighter hairline
+     ring and a soft top highlight. Fixes the "muddy dark-on-dark" contrast. */
   .card-surface {
-    @apply rounded-3xl bg-gradient-to-b from-carbon to-graphite ring-1 ring-white/[0.06] transition-all duration-500;
+    @apply rounded-3xl bg-gradient-to-b from-slate to-carbon ring-1 ring-white/10 transition-all duration-500;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   }
   .card-surface:hover {
-    @apply -translate-y-1 shadow-glow ring-gold/25;
+    @apply -translate-y-1 shadow-glow ring-gold/30;
   }
 
   .statement {
@@ -84,6 +87,54 @@
     -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
     mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
   }
+  .headline-bleed {
+    @apply font-serif leading-[0.95] tracking-tight text-smoke;
+    font-size: clamp(2.75rem, 8vw, 7rem);
+  }
+}
+
+/* Fine film grain for material richness on the dark canvas. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Cursor "polish" shine — a bronze radial highlight tracking the pointer. */
+.shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(228, 210, 168, 0.35),
+    rgba(201, 163, 92, 0.1) 42%,
+    transparent 66%
+  );
+  mix-blend-mode: screen;
+}
+.shine-host:hover .shine {
+  opacity: 1;
+}
+
+/* Scroll-triggered light-sweep across a card (e.g. the Signature tier). */
+@keyframes sweep {
+  0% { transform: translateX(-130%) skewX(-18deg); }
+  100% { transform: translateX(230%) skewX(-18deg); }
+}
+.sweep-on::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, rgba(228, 210, 168, 0.18) 50%, transparent 70%);
+  transform: translateX(-130%) skewX(-18deg);
+  animation: sweep 1.4s ease-out 0.3s 1;
 }
 
 /* Ambient bronze glow carried through the page (atmosphere past the hero) */
@@ -96,7 +147,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(60% 50% at 50% 0%, rgba(201, 163, 92, 0.07), transparent 70%);
+  background: radial-gradient(70% 60% at 50% 0%, rgba(201, 163, 92, 0.11), transparent 72%);
   pointer-events: none;
 }
 
@@ -117,6 +168,12 @@ html.js .reveal {
   opacity: 0;
   transform: translateY(28px);
   will-change: opacity, transform;
+}
+
+/* Stagger children start hidden too (GSAP animates them in), preventing a
+   flash of content before the effect runs. */
+html.js .reveal-stagger > * {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

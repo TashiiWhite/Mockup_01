@@ -1,5 +1,6 @@
 import { testimonials } from '../data/content'
 import { Icon } from './Icons'
+import { SectionLabel } from './SectionLabel'
 
 function Stars({ className = '' }) {
   return (
@@ -20,7 +21,7 @@ export default function Testimonials() {
     <section className="section-pad">
       <div className="mx-auto max-w-content px-6 md:px-10">
         <div className="reveal max-w-2xl">
-          <span className="eyebrow-line">{testimonials.eyebrow}</span>
+          <SectionLabel index="03">{testimonials.eyebrow}</SectionLabel>
           <h2 className="mt-5 statement text-display-sm">{testimonials.title}</h2>
         </div>
 
@@ -37,7 +38,7 @@ export default function Testimonials() {
                 src={featured.avatar}
                 alt={featured.name}
                 loading="lazy"
-                className="h-14 w-14 rounded-full object-cover ring-2 ring-gold/40"
+                className="h-16 w-16 rounded-full object-cover ring-2 ring-gold/50"
               />
               <div className="flex-1">
                 <p className="font-medium text-ivory">{featured.name}</p>

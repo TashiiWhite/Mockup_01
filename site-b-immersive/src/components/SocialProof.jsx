@@ -13,7 +13,7 @@ export default function SocialProof() {
             {loop.map((logo, i) => (
               <span
                 key={`${logo}-${i}`}
-                className="whitespace-nowrap font-serif text-2xl tracking-wide text-mist/50 transition-colors duration-300 hover:text-smoke md:text-3xl"
+                className="whitespace-nowrap font-serif text-2xl tracking-wide text-smoke transition-colors duration-300 hover:text-gold md:text-3xl"
               >
                 {logo}
               </span>

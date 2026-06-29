@@ -20,6 +20,7 @@ export default function App() {
   return (
     <>
       <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
+      <div className="grain" aria-hidden="true" />
       <Navbar />
       <main>
         <Hero />

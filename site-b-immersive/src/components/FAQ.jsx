@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { faq } from '../data/content'
+import { faq, brand } from '../data/content'
 import { Icon } from './Icons'
+import { SectionLabel } from './SectionLabel'
 
 function Item({ item, isOpen, onToggle, index }) {
   const panelId = `faq-panel-${index}`
@@ -8,7 +9,7 @@ function Item({ item, isOpen, onToggle, index }) {
   return (
     <div
       className={`reveal overflow-hidden rounded-2xl border transition-colors duration-300 ${
-        isOpen ? 'border-gold/40 bg-gradient-to-b from-carbon to-graphite' : 'border-white/8 bg-transparent'
+        isOpen ? 'border-gold/40 bg-gradient-to-b from-slate to-carbon' : 'border-white/10 bg-white/[0.02]'
       }`}
     >
       <h3>
@@ -50,13 +51,20 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="atmosphere section-pad">
-      <div className="mx-auto max-w-3xl px-6 md:px-10">
-        <div className="reveal text-center">
-          <span className="eyebrow-line justify-center">{faq.eyebrow}</span>
+      <div className="mx-auto grid max-w-content gap-10 px-6 md:px-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="reveal lg:sticky lg:top-28 lg:self-start">
+          <SectionLabel index="06">{faq.eyebrow}</SectionLabel>
           <h2 className="mt-5 statement text-display-sm">{faq.title}</h2>
+          <p className="mt-6 max-w-xs text-mist">
+            Still curious? Reach us directly at{' '}
+            <a href={brand.phoneHref} className="font-medium text-gold underline-offset-4 hover:underline">
+              {brand.phone}
+            </a>
+            .
+          </p>
         </div>
 
-        <div className="mt-14 space-y-3">
+        <div className="space-y-3">
           {faq.items.map((item, i) => (
             <Item
               key={item.q}

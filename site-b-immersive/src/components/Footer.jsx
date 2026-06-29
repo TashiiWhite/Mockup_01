@@ -6,7 +6,7 @@ const SOCIAL_ICON = { Instagram: 'instagram', Facebook: 'facebook', TikTok: 'tik
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-obsidian text-smoke">
+    <footer className="atmosphere border-t border-white/10 bg-obsidian text-smoke">
       <div className="mx-auto max-w-content px-6 py-16 md:px-10">
         {/* Top: brand + tap-to-call CTA */}
         <div className="flex flex-col gap-8 border-b border-white/10 pb-12 md:flex-row md:items-center md:justify-between">

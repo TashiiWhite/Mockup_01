@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { beforeAfter } from '../data/content'
-import { useParallax } from '../hooks/useMotion'
+import { SectionLabel } from './SectionLabel'
 
 /**
  * Interactive before/after reveal slider. One source image is used for both
@@ -11,7 +11,6 @@ export default function BeforeAfter() {
   const [pos, setPos] = useState(50)
   const [dragging, setDragging] = useState(false)
   const containerRef = useRef(null)
-  const parallaxRef = useParallax(40)
 
   const move = useCallback((clientX) => {
     const el = containerRef.current
@@ -44,22 +43,24 @@ export default function BeforeAfter() {
   }
 
   return (
-    <section className="section-pad bg-cream/40">
-      <div className="mx-auto max-w-content px-6 md:px-10">
+    <section className="relative section-pad overflow-hidden bg-ink text-ivory">
+      {/* Ambient gold wash — ties the dark band into the brand palette */}
+      <div className="pointer-events-none absolute -left-32 top-1/2 h-[36rem] w-[36rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(176,141,79,0.18),transparent_70%)] blur-2xl" />
+      <div className="relative mx-auto max-w-content px-6 md:px-10">
         <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.4fr]">
           {/* Copy — left, asymmetric */}
           <div className="reveal">
-            <span className="eyebrow-line">{beforeAfter.eyebrow}</span>
-            <h2 className="mt-5 statement text-display-sm">{beforeAfter.title}</h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-stone">{beforeAfter.sub}</p>
-            <p className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-bronze">
+            <SectionLabel index="02" dark>{beforeAfter.eyebrow}</SectionLabel>
+            <h2 className="mt-5 statement text-display-sm !text-ivory">{beforeAfter.title}</h2>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-ivory/70">{beforeAfter.sub}</p>
+            <p className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-champagne">
               <span className="h-2 w-2 animate-pulse rounded-full bg-gold" />
               Drag the handle to compare
             </p>
           </div>
 
           {/* Slider — right, larger */}
-          <div ref={parallaxRef} className="reveal">
+          <div className="reveal">
             <div
               ref={containerRef}
               className="relative aspect-[4/3] w-full select-none overflow-hidden rounded-[2rem] shadow-luxe ring-1 ring-ink/10 sm:aspect-[16/10]"

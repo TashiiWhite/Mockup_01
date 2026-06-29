@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { howItWorks } from '../data/content'
+import { SectionLabel } from './SectionLabel'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -39,10 +40,8 @@ export default function HowItWorks() {
   return (
     <section id="how" ref={sectionRef} className="section-pad bg-ink text-ivory">
       <div className="mx-auto max-w-content px-6 md:px-10">
-        <div className="reveal mx-auto max-w-2xl text-center">
-          <span className="eyebrow-line justify-center !text-champagne before:bg-gold/60">
-            {howItWorks.eyebrow}
-          </span>
+        <div className="reveal max-w-3xl">
+          <SectionLabel index="05" dark>{howItWorks.eyebrow}</SectionLabel>
           <h2 className="mt-5 font-serif text-display-sm leading-[1.05] tracking-tight">
             {howItWorks.title}
           </h2>

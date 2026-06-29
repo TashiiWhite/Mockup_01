@@ -1,6 +1,6 @@
 import { hero, brand } from '../data/content'
 import { scrollToId, openBooking } from '../hooks/useScrollReveal'
-import { useMagnetic, useCountUp, useParallax } from '../hooks/useMotion'
+import { useMagnetic, useCountUp, useParallax, useSpotlight } from '../hooks/useMotion'
 import { Icon } from './Icons'
 
 function Stat({ stat }) {
@@ -20,6 +20,7 @@ function Stat({ stat }) {
 export default function Hero() {
   const magneticRef = useMagnetic()
   const imgRef = useParallax(50)
+  const shineRef = useSpotlight()
 
   return (
     <section id="top" className="relative overflow-hidden pt-32 md:pt-40">
@@ -48,16 +49,21 @@ export default function Hero() {
             </button>
           </div>
 
-          <dl className="reveal mt-14 grid grid-cols-3 gap-6 border-t border-ink/10 pt-8">
+          <dl className="reveal mt-14 grid grid-cols-3 divide-x divide-ink/10 border-y border-ink/10 py-7">
             {hero.stats.map((s) => (
-              <Stat key={s.label} stat={s} />
+              <div key={s.label} className="px-4 first:pl-0">
+                <Stat stat={s} />
+              </div>
             ))}
           </dl>
         </div>
 
         {/* Image */}
         <div className="reveal relative">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-cream shadow-luxe">
+          <div
+            ref={shineRef}
+            className="shine-host group relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-cream shadow-luxe"
+          >
             <img
               ref={imgRef}
               src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=900&q=80"
@@ -66,6 +72,8 @@ export default function Hero() {
               className="h-[112%] w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/30 to-transparent" />
+            {/* Cursor-tracked "polish" shine — the signature on-brand interaction */}
+            <div className="shine" />
           </div>
 
           {/* Floating credibility card */}

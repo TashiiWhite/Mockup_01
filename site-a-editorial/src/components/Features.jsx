@@ -1,6 +1,7 @@
 import { features } from '../data/content'
 import { openBooking } from '../hooks/useScrollReveal'
 import { Icon } from './Icons'
+import { SectionLabel } from './SectionLabel'
 
 // Indices that become wide "highlight" tiles — breaks the uniform 6-up grid.
 const WIDE = new Set([0, 3])
@@ -9,15 +10,19 @@ export default function Features() {
   return (
     <section id="features" className="section-pad">
       <div className="mx-auto max-w-content px-6 md:px-10">
-        <div className="reveal grid items-end gap-6 md:grid-cols-[1.4fr_1fr]">
+        {/* Oversized editorial headline pinned left; copy tucked bottom-right */}
+        <div className="reveal grid items-end gap-6 md:grid-cols-[1.55fr_1fr]">
           <div>
-            <span className="eyebrow-line">{features.eyebrow}</span>
-            <h2 className="mt-5 statement text-display-sm">{features.title}</h2>
+            <SectionLabel index="01">{features.eyebrow}</SectionLabel>
+            <h2 className="mt-5 headline-bleed text-ink">
+              Care your car<br className="hidden sm:block" /> can{' '}
+              <span className="italic text-gold">actually</span> see.
+            </h2>
           </div>
-          <p className="text-lg leading-relaxed text-stone md:pb-2">{features.sub}</p>
+          <p className="text-lg leading-relaxed text-stone md:pb-3">{features.sub}</p>
         </div>
 
-        <div className="reveal-stagger mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="reveal-stagger mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.items.map((item, i) => {
             const wide = WIDE.has(i)
             return (

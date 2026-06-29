@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { contact, brand } from '../data/content'
 import { Icon } from './Icons'
+import { SectionLabel } from './SectionLabel'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -46,7 +47,7 @@ export default function Contact() {
     <section id="contact" className="section-pad bg-cream/40">
       <div className="mx-auto grid max-w-content grid-cols-1 gap-14 px-6 md:px-10 lg:grid-cols-2">
         <div className="reveal">
-          <span className="eyebrow-line">{contact.eyebrow}</span>
+          <SectionLabel index="07">{contact.eyebrow}</SectionLabel>
           <h2 className="mt-5 statement text-display-sm">{contact.title}</h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-stone">{contact.sub}</p>
 

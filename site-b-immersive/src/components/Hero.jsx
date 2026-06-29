@@ -1,6 +1,6 @@
 import { hero } from '../data/content'
 import { scrollToId, openBooking } from '../hooks/useScrollReveal'
-import { useMagnetic, useCountUp } from '../hooks/useMotion'
+import { useMagnetic, useCountUp, useSpotlight } from '../hooks/useMotion'
 import { Icon } from './Icons'
 import VantaBackground from './VantaBackground'
 
@@ -20,9 +20,14 @@ function Stat({ stat }) {
 
 export default function Hero() {
   const magneticRef = useMagnetic()
+  const shineRef = useSpotlight()
 
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden">
+    <section
+      id="top"
+      ref={shineRef}
+      className="shine-host relative flex min-h-screen items-center overflow-hidden"
+    >
       {/* Static gradient fallback — always present */}
       <div className="absolute inset-0 bg-gradient-to-br from-obsidian via-graphite to-carbon" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(201,163,92,0.18),transparent_55%)]" />
@@ -30,8 +35,12 @@ export default function Hero() {
       {/* WebGL layer (desktop, motion-allowed only) */}
       <VantaBackground />
 
-      {/* Vignette for text legibility */}
+      {/* Vignette + left scrim for text legibility over the animated fog */}
       <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-obsidian/85 via-obsidian/30 to-transparent md:to-obsidian/0" />
+
+      {/* Cursor-tracked "polish" shine — signature on-brand interaction */}
+      <div className="shine" />
 
       <div className="relative mx-auto w-full max-w-content px-6 py-32 md:px-10">
         <div className="max-w-3xl">
@@ -56,9 +65,11 @@ export default function Hero() {
             </button>
           </div>
 
-          <dl className="reveal mt-16 grid max-w-xl grid-cols-3 gap-6 border-t border-smoke/15 pt-8">
+          <dl className="reveal mt-16 grid max-w-xl grid-cols-3 divide-x divide-smoke/15 border-y border-smoke/15 py-7">
             {hero.stats.map((s) => (
-              <Stat key={s.label} stat={s} />
+              <div key={s.label} className="px-4 first:pl-0">
+                <Stat stat={s} />
+              </div>
             ))}
           </dl>
         </div>
